@@ -37,6 +37,8 @@ const (
 	TimerStdoutCallback = "timer"
 	// YamlStdoutCallback yamlized ansible screen output
 	YamlStdoutCallback = "yaml"
+	// JSONOutputStdoutCallback ansible screen output as json
+	JSONOutputStdoutCallback = "json_output"
 )
 
 // AnsibleStdoutCallbackToJSON sets the stdout callback to json
@@ -51,7 +53,8 @@ func AnsibleStdoutCallbackSetEnv(callback string) {
 		callback != OnelineStdoutCallback &&
 		callback != StderrStdoutCallback &&
 		callback != TimerStdoutCallback &&
-		callback != YamlStdoutCallback {
+		callback != YamlStdoutCallback &&
+		callback != JSONOutputStdoutCallback {
 		callback = DefaultStdoutCallback
 	}
 
@@ -62,7 +65,7 @@ func AnsibleStdoutCallbackSetEnv(callback string) {
 func GetResultsFunc(callback string) StdoutCallbackResultsFunc {
 
 	switch callback {
-	case JSONStdoutCallback:
+	case JSONStdoutCallback, JSONOutputStdoutCallback:
 		return results.JSONStdoutCallbackResults
 	default:
 		return results.DefaultStdoutCallbackResults
